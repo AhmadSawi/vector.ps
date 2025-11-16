@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mandala Collection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg-dark: #050507;
+      --bg-mid: #11131a;
+      --bg-light: #1e1f27;
+      --accent: #b0f1d6;
+      --text-muted: #a7a8b6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg-dark);
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    main {
+      width: 100%;
+    }
+
+    section {
+      padding: 5rem clamp(1.5rem, 4vw, 6rem);
+    }
+
+    h1, h2, h3 {
+      font-weight: 500;
+      letter-spacing: 0.06em;
+    }
+
+    p {
+      line-height: 1.6;
+      color: var(--text-muted);
+      max-width: 40rem;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      background: radial-gradient(circle at top, rgba(176, 241, 214, 0.15), transparent 50%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(176, 241, 214, 0.08), transparent);
+      opacity: 0;
+      animation: shimmer 6s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0; transform: translateX(-10%); }
+      50% { opacity: 1; transform: translateX(10%); }
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 8vw, 6rem);
+      margin-bottom: 1rem;
+    }
+
+    .hero-tagline {
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      color: #d9dfec;
+      margin-bottom: 2rem;
+    }
+
+    .scroll-indicator {
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.4em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .scroll-indicator::after {
+      content: '';
+      width: 80px;
+      height: 1px;
+      background: var(--text-muted);
+      display: inline-block;
+    }
+
+    .room-scene {
+      position: relative;
+      min-height: 120vh;
+      background: var(--bg-mid);
+      overflow: hidden;
+    }
+
+    .room-stage {
+      position: relative;
+      height: 80vh;
+      margin: auto;
+      border-radius: 30px;
+      background: linear-gradient(160deg, #0f1118, #151825);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.55);
+      overflow: hidden;
+    }
+
+    .room-lighting {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(176, 241, 214, 0.3), transparent 60%);
+      opacity: 0.15;
+      transition: background 0.4s ease;
+    }
+
+    .product-layer {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(40px) scale(0.96);
+    }
+
+    .product-card {
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .product-card img {
+      width: min(40vw, 320px);
+      filter: drop-shadow(0 30px 50px rgba(0,0,0,0.6));
+    }
+
+    .product-card h3 {
+      margin-top: 1.2rem;
+      font-size: clamp(1.6rem, 3vw, 2rem);
+    }
+
+    .product-card span {
+      display: block;
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      text-transform: uppercase;
+    }
+
+    .product-panel {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2rem;
+      background: var(--bg-mid);
+      border-radius: 30px;
+      margin: clamp(2rem, 8vw, 6rem) auto;
+      padding: clamp(2rem, 4vw, 4rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(176,241,214,0.12), transparent 50%);
+      pointer-events: none;
+    }
+
+    .panel-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+    }
+
+    ul.features {
+      list-style: none;
+      color: #d0d2e0;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    ul.features li {
+      margin-bottom: 0.8rem;
+      position: relative;
+      padding-left: 1.8rem;
+    }
+
+    ul.features li::before {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      position: absolute;
+      left: 0;
+      top: 0.4rem;
+    }
+
+    .cta-btn {
+      align-self: flex-start;
+      background: var(--accent);
+      color: #09130e;
+      padding: 0.85rem 2.6rem;
+      border-radius: 999px;
+      border: none;
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.4s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-4px);
+    }
+
+    .closing {
+      padding: 10rem clamp(2rem, 4vw, 6rem);
+      text-align: center;
+      background: linear-gradient(180deg, transparent, rgba(176, 241, 214, 0.08));
+    }
+
+    .closing h2 {
+      font-size: clamp(2rem, 6vw, 4rem);
+      margin-bottom: 1rem;
+    }
+
+    .closing button {
+      margin-top: 2rem;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 0.8rem 2.5rem;
+      border-radius: 999px;
+      color: #fff;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+
+    .parallax-text {
+      font-size: clamp(3rem, 9vw, 8rem);
+      font-weight: 300;
+      opacity: 0.05;
+      position: absolute;
+      top: 10%;
+      right: -5%;
+    }
+
+    @media (max-width: 768px) {
+      .room-stage {
+        height: 70vh;
+      }
+
+      .product-card img {
+        width: min(60vw, 260px);
+      }
+
+      .product-panel {
+        min-height: 70vh;
+      }
+
+      .cta-btn {
+        align-self: stretch;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div>
+        <p class="hero-tagline">Visionary Interiors / 2025</p>
+        <h1 class="hero-title">Mandala Collection</h1>
+        <p>A curated line of multilayer mandala-inspired objects that reimagine balance within contemporary spaces.</p>
+      </div>
+      <div class="scroll-indicator">Scroll</div>
+    </section>
+
+    <section id="room-scene" class="room-scene">
+      <div class="room-stage">
+        <div class="room-lighting" id="roomLighting"></div>
+
+        <!-- Each .product-layer fades/scales in as the scroll-timeline progresses -->
+        <div class="product-layer" id="tableLayer">
+          <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1524758870432-af57e54afa26?auto=format&fit=crop&w=800&q=80" alt="Mandala Table" />
+            <h3>Multilayer Mandala Table</h3>
+            <span>Centerpiece</span>
+          </div>
+        </div>
+
+        <div class="product-layer" id="mirrorLayer">
+          <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=900&q=80" alt="Mandala Mirror" />
+            <h3>Infinite Reflection Mirror</h3>
+            <span>Wall Art</span>
+          </div>
+        </div>
+
+        <div class="product-layer" id="furnitureLayer">
+          <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1616628182503-0f08401881d2?auto=format&fit=crop&w=900&q=80" alt="Furniture" />
+            <h3>Sculpted Seating Suite</h3>
+            <span>Furniture</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="product-panel" data-product="table">
+      <h2 class="panel-title">Mandala Table</h2>
+      <p>Stacked acrylic and matte walnut discs reveal meditative patterns at every angle, catching light with a soft glow.</p>
+      <ul class="features">
+        <li>Precision-cut geometric layering</li>
+        <li>Integrated wireless charging surface</li>
+        <li>Customizable inlay materials</li>
+      </ul>
+      <button class="cta-btn">Pre-Order</button>
+      <span class="parallax-text">Table</span>
+    </section>
+
+    <section class="product-panel" data-product="mirror">
+      <h2 class="panel-title">Halo Mirror</h2>
+      <p>Mirrored glass floats inside a halo frame, projecting subtle gradients that shift as daylight moves across the room.</p>
+      <ul class="features">
+        <li>Edge-lit diffused LED halo</li>
+        <li>Adjustable warmth presets</li>
+        <li>Anti-fog coated surface</li>
+      </ul>
+      <button class="cta-btn">Discover</button>
+      <span class="parallax-text">Mirror</span>
+    </section>
+
+    <section class="product-panel" data-product="furniture">
+      <h2 class="panel-title">Furniture Suite</h2>
+      <p>An adaptable collection featuring chairs, consoles, and floating shelves that echo mandala symmetries.</p>
+      <ul class="features">
+        <li>Lightweight carbon structure</li>
+        <li>Magnetic modular shelving</li>
+        <li>Responsibly sourced upholstery</li>
+      </ul>
+      <button class="cta-btn">Learn More</button>
+      <span class="parallax-text">Form</span>
+    </section>
+
+    <section class="closing">
+      <h2>Craft your sanctuary.</h2>
+      <p>Join the early collector's list to receive private previews and bespoke finishing options.</p>
+      <button>Request Access</button>
+    </section>
+  </main>
+
+  <!-- GSAP core + ScrollTrigger for scroll-based animation control -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    // Register ScrollTrigger plugin for pinning and timeline control
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Master timeline controlling room scene theme + product reveals
+    const roomTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#room-scene',
+        start: 'top top',
+        end: '+=2000', // adjust to control total scroll distance for the room scene
+        scrub: true,
+        pin: true,
+      }
+    });
+
+    roomTimeline
+      .to('#roomLighting', { background: 'radial-gradient(circle at 70% 20%, rgba(240, 211, 180, 0.45), transparent 55%)', duration: 0.6 }, 0)
+      .to('#tableLayer', { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power2.out' }, 0.05)
+      .to('#tableLayer', { opacity: 0, duration: 0.5 }, 0.6)
+      .to('#roomLighting', { background: 'radial-gradient(circle at 40% 60%, rgba(176, 241, 214, 0.5), transparent 55%)', duration: 0.6 }, 0.6)
+      .to('#mirrorLayer', { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power2.out' }, 0.65)
+      .to('#mirrorLayer', { opacity: 0, duration: 0.5 }, 1.2)
+      .to('#roomLighting', { background: 'radial-gradient(circle at 60% 40%, rgba(163, 202, 255, 0.45), transparent 55%)', duration: 0.6 }, 1.2)
+      .to('#furnitureLayer', { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power2.out' }, 1.25);
+
+    // Loop through product panels to set scroll-driven reveal + parallax text
+    document.querySelectorAll('.product-panel').forEach((panel) => {
+      const text = panel.querySelector('.parallax-text');
+
+      // Fade/slide panel content as it enters the viewport
+      gsap.from(panel.children, {
+        opacity: 0,
+        y: 40,
+        stagger: 0.15,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: panel,
+          start: 'top 75%',
+        }
+      });
+
+      // Parallax text moves slower for depth effect
+      gsap.to(text, {
+        yPercent: -40,
+        scrollTrigger: {
+          trigger: panel,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
+      });
+    });
+
+    // CTA fade-in once it is near the viewport
+    gsap.from('.closing', {
+      opacity: 0,
+      y: 80,
+      duration: 1.2,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '.closing',
+        start: 'top 80%'
+      }
+    });
+
+    // Notes for editors:
+    // - Adjust durations/easing via gsap.to/from duration + ease props above.
+    // - To add new products to the room scene, duplicate .product-layer blocks and extend the timeline.
+    // - Additional product panels can be appended to the DOM and will automatically receive the reveal animation.
+  </script>
+</body>
+</html>
